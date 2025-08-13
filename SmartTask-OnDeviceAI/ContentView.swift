@@ -8,16 +8,54 @@
 import SwiftUI
 
 struct ContentView: View {
+    @StateObject var taskManager = TaskManager()
+    @State private var showingAddTaskView = false
+    @State private var showingAIPromptView = false
+
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        NavigationView {
+            List {
+                ForEach(taskManager.tasks) { task in
+                    TaskRowView(task: task)
+                }
+                .onDelete(perform: taskManager.deleteTask)
+            }
+            .refreshable {
+                
+            }
+            .navigationTitle("Tasks")
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button {
+                        showingAIPromptView.toggle()
+                    } label: {
+                        Label("AI Add Task", systemImage: "sparkles")
+                    }
+                }
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button {
+                        showingAddTaskView.toggle()
+                    } label: {
+                        Label("Add Task", systemImage: "plus.circle.fill")
+                    }
+                }
+            }
+            .sheet(isPresented: $showingAddTaskView) {
+                AddTaskView(task: TaskModel(title: "", details: "", deadline: nil)) { newTask in
+                    taskManager.addTask(task: newTask)
+                }
+            }
+            .sheet(isPresented: $showingAIPromptView) {
+                AIPromptView() { newTasks in
+                    for task in newTasks {
+                        taskManager.addTask(task: task)
+                    }
+                }
+            }
         }
-        .padding()
     }
 }
+
 
 #Preview {
     ContentView()
