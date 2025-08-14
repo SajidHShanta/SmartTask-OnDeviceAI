@@ -121,3 +121,38 @@ struct EditTaskView: View {
         }
     }
 }
+
+
+
+
+struct AITemoTaskRowView: View {
+    @Binding var task: TaskModel      
+    @State private var showingEditTaskView = false
+
+    var body: some View {
+        HStack {
+            VStack(alignment: .leading) {
+                Text(task.title)
+                    .strikethrough(task.isCompleted)
+                    .font(.headline)
+                if let deadline = task.deadline {
+                    Text(deadline, style: .date)
+                        .font(.subheadline)
+                        .foregroundColor(.secondary)
+                }
+            }
+
+            Spacer()
+
+            Button {
+                showingEditTaskView.toggle()
+            } label: {
+                Image(systemName: "pencil")
+            }
+            .sheet(isPresented: $showingEditTaskView) {
+                EditTaskView(task: $task)  // <- pass binding
+            }
+        }
+    }
+}
+

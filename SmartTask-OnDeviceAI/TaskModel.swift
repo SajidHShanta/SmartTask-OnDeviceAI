@@ -25,6 +25,7 @@ struct GeneratedTask: Equatable, Codable {
     @Guide(description: "Detailed information about the task.")
     var details: String
     
-    @Guide(description: "The deadline for the task, represented as a date Sring like this 'dd MMMM, yyyy'.")
+//    @Guide(description: "Task future deadline date as a string (e.g., 'dd MMMM, yyyy', '21 August, 2025'), always present or future.")
+    @Guide(description: "Task deadline date as a string in ISO 8601 format (e.g., '2025-08-21T12:00:00Z'), always present or future.")
     var deadline: String
 }
