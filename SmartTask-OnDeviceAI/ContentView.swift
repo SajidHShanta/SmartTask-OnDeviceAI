@@ -23,7 +23,7 @@ struct ContentView: View {
             .refreshable {
                 
             }
-            .navigationTitle("Tasks")
+            .navigationTitle("Activity Task")
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
@@ -41,7 +41,7 @@ struct ContentView: View {
                 }
             }
             .sheet(isPresented: $showingAddTaskView) {
-                AddTaskView(task: TaskModel(title: "", details: "", deadline: nil)) { newTask in
+                AddTaskView(task: TaskModel(title: "", details: "", deadline: nil, category: .others)) { newTask in
                     taskManager.addTask(task: newTask)
                 }
             }

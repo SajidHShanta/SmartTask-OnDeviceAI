@@ -36,7 +36,7 @@ struct AIPromptView: View {
                             await generateTasks()
                         }
                     }, label: {
-                        Text("Generate Tasks")
+                        Text("Generate Activities")
                         //                    if isLoading {
                         //                        ProgressView()
                         //                    } else {
@@ -66,7 +66,7 @@ struct AIPromptView: View {
                 
                 if isLoading { ProgressView() }
             }
-            .navigationTitle("AI Task Generator")
+            .navigationTitle("AI Activity Generator")
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
                     Button("Close") {
@@ -102,8 +102,9 @@ struct AIPromptView: View {
             for generatedTask in finalTasks {
                 if let title = generatedTask.title,
                    let details = generatedTask.details,
-                   let deadline = generatedTask.deadline {
-                    let newtask = TaskModel(title: title, details: details, deadline: formatter.date(from: deadline))
+                   let deadline = generatedTask.deadline,
+                   let category = generatedTask.category{
+                    let newtask = TaskModel(title: title, details: details, deadline: formatter.date(from: deadline), category: category)
                     generatedTasks.append(newtask)
                 }
             }
@@ -111,7 +112,7 @@ struct AIPromptView: View {
             
         } catch {
             // Handle any errors that occur during generation
-            print("Error generating tasks: \(error)")
+            print("Error generating Activity: \(error)")
         }
         isLoading = false
     }

@@ -25,10 +25,16 @@ struct TaskRowView: View {
                 Text(task.title)
                     .strikethrough(task.isCompleted)
                     .font(.headline)
-                if let deadline = task.deadline {
-                    Text(deadline, style: .date)
-                        .font(.subheadline)
-                        .foregroundColor(.secondary)
+                HStack {
+                    Text(task.category.rawValue)
+                        .padding(.horizontal, 16)
+                        .background(Color.accentColor.opacity(0.2))
+                        .clipShape(RoundedRectangle(cornerRadius: 10))
+                    if let deadline = task.deadline {
+                        Text(deadline, style: .date)
+                            .font(.subheadline)
+                            .foregroundColor(.secondary)
+                    }
                 }
             }
 
@@ -57,70 +63,7 @@ struct TaskRowView: View {
 
 import SwiftUI
 
-struct EditTaskView: View {
-    @Environment(\.dismiss) var dismiss
-    
-    // Use a @Binding to modify the original task data directly.
-    @Binding var task: TaskModel
-    
-    // A simple state variable to track if a deadline is enabled.
-    // This provides a better user experience than checking `task.deadline != nil`.
-    @State private var deadlineEnabled: Bool
 
-    // An initializer to set the initial state of the deadline toggle.
-    init(task: Binding<TaskModel>) {
-        _task = task
-        _deadlineEnabled = State(initialValue: task.deadline.wrappedValue != nil)
-    }
-
-    var body: some View {
-        NavigationView {
-            Form {
-                Section(header: Text("Task Details")) {
-                    TextField("Title", text: $task.title)
-                    TextEditor(text: $task.details)
-                        .frame(height: 100)
-                }
-                
-                Section(header: Text("Deadline")) {
-                    // Use a toggle to manage the deadline date picker's visibility.
-                    Toggle("Set a Deadline", isOn: $deadlineEnabled)
-                        .tint(.blue)
-
-                    if deadlineEnabled {
-                        // The DatePicker selection is bound to the task's deadline
-                        DatePicker(
-                            "Date",
-                            selection: Binding(
-                                get: { task.deadline ?? Date() },
-                                set: { newDate in task.deadline = newDate }
-                            ),
-                            displayedComponents: .date
-                        )
-                    }
-                }
-            }
-            .navigationTitle(task.title.isEmpty ? "New Task" : "Edit Task")
-            .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    Button("Cancel") {
-                        dismiss()
-                    }
-                }
-                ToolbarItem(placement: .confirmationAction) {
-                    Button("Save") {
-                        // If the deadline toggle is off, remove the deadline
-                        if !deadlineEnabled {
-                            task.deadline = nil
-                        }
-                        dismiss()
-                    }
-                    .disabled(task.title.isEmpty)
-                }
-            }
-        }
-    }
-}
 
 
 
@@ -135,10 +78,16 @@ struct AITemoTaskRowView: View {
                 Text(task.title)
                     .strikethrough(task.isCompleted)
                     .font(.headline)
-                if let deadline = task.deadline {
-                    Text(deadline, style: .date)
-                        .font(.subheadline)
-                        .foregroundColor(.secondary)
+                HStack {
+                    Text(task.category.rawValue)
+                        .padding(.horizontal, 16)
+                        .background(Color.accentColor.opacity(0.2))
+                        .clipShape(RoundedRectangle(cornerRadius: 10))
+                    if let deadline = task.deadline {
+                        Text(deadline, style: .date)
+                            .font(.subheadline)
+                            .foregroundColor(.secondary)
+                    }
                 }
             }
 
