@@ -1,29 +1,18 @@
 //
-//  TaskRowView.swift
+//  EditTaskView.swift
 //  SmartTask-OnDeviceAI
 //
-//  Created by Sajid Shanta on 13/8/25.
+//  Created by Sajid Shanta on 20/8/25.
 //
 
 import SwiftUI
 
-struct TaskRowView: View {
-    @State var task: TaskModel
+struct AITemoTaskRowView: View {
+    @Binding var task: TaskModel
     @State private var showingEditTaskView = false
-    
-    var taskStatusChange: (TaskStatusChange) -> Void
 
     var body: some View {
         HStack {
-            Button {
-                task.isCompleted.toggle()
-                taskStatusChange(task.isCompleted ? .incresed : .decresed)
-            } label: {
-                Image(systemName: task.isCompleted ? "checkmark.circle.fill" : "circle")
-                    .foregroundColor(task.isCompleted ? .green : .gray)
-            }
-            .buttonStyle(PlainButtonStyle())
-
             VStack(alignment: .leading) {
                 Text(task.title)
                     .strikethrough(task.isCompleted)
@@ -49,12 +38,9 @@ struct TaskRowView: View {
                 Image(systemName: "pencil")
             }
             .sheet(isPresented: $showingEditTaskView) {
-                // EditTaskView would go here
-                EditTaskView(task: $task)
+                EditTaskView(task: $task)  // <- pass binding
             }
         }
-//        .padding()
-//        .background(Color.secondary.opacity(0.05))
-//        .clipShape(RoundedRectangle(cornerRadius: 10))
     }
 }
+

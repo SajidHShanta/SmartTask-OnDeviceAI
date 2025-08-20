@@ -10,6 +10,7 @@ import Combine
 
 class TaskManager: ObservableObject {
     @Published var tasks: [TaskModel] = []
+    @Published var completionCount: Int = 0
     
     func addTask(task: TaskModel) {
         tasks.append(task)
