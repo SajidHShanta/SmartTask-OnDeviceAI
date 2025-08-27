@@ -55,7 +55,7 @@ struct AddTaskView: View {
                     }
                 }
             }
-            .navigationTitle(task.title.isEmpty ? "New Activity" : "Edit Activity")
+            .navigationTitle("New Activity")
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
                     Button("Cancel") {
@@ -139,7 +139,7 @@ struct EditTaskView: View {
                     }
                 }
             }
-            .navigationTitle(task.title.isEmpty ? "New Activity" : "Edit Activity")
+            .navigationTitle("Edit Activity")
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
                     Button("Cancel") {
